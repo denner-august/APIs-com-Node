@@ -23,13 +23,14 @@ class Database {
 
     async Cadastrar(heroi) {
         const dados = await this.obterDadosArquivos()
-        const id = heroi.id <= 2 ? heroi.id : Date.now()
+        const id = heroi.id <= 2 && heroi.id > 0 ? heroi.id : Date.now()
         const heroiComId = {
             id,
             ...heroi
         }
         const dadosFinal = [...dados, heroiComId]
         const resultado = await this.escreverArquivo(dadosFinal)
+
 
         return resultado
     }
@@ -56,8 +57,23 @@ class Database {
 
         dados.splice(indice, 1)
         return await this.escreverArquivo(dados)
+    }
 
+    async atualizar(id, dados) {
+        const AtualDados = await this.obterDadosArquivos()
+        const indice = AtualDados.findIndex(item => item.id === parseInt(id))
+        if (indice === -1) {
+            throw Error("heroi não existe")
+        }
+        const atual = AtualDados[indice]
 
+        const newObject = {
+            ...atual,
+            ...dados
+        }
+
+        AtualDados.splice(indice, 1)
+        return await this.escreverArquivo([...AtualDados, newObject])
     }
 }
 
