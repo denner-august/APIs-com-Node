@@ -20,6 +20,10 @@ class ContextStrategy extends iCrud {
     delete(id) {
         return this._database.delete(id)
     }
+
+    IsConnected() {
+        return this._database.IsConnected()
+    }
 }
 
 module.exports = ContextStrategy
