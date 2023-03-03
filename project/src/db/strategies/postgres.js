@@ -7,6 +7,7 @@ class Postgres extends iCrud {
         this._driver = null
         this._herois = null
         this._connect()
+        this.defineModel()
     }
 
     async IsConnected() {
@@ -21,7 +22,7 @@ class Postgres extends iCrud {
     }
 
     async defineModel() {
-        this._herois = driver.define('herois',
+        this._herois = this._driver.define('herois',
             {
                 id: {
                     type: Sequelize.INTEGER,
@@ -59,8 +60,11 @@ class Postgres extends iCrud {
         )
     }
 
-    create(item) {
-        console.log('o item foi salvo em postgres')
+    async create(item) {
+
+
+        const { dataValues } = await this._herois.create(item)
+        return dataValues
     }
 }
 module.exports = Postgres
