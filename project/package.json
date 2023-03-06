@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "commit": "cz",
-    "test": "mocha test/postgresStrategy"
+    "test": "mocha src/test/*.js"
   },
   "repository": {
     "type": "git",
