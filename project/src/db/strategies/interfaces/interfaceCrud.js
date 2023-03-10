@@ -24,6 +24,10 @@ class iCrud {
     IsConnected() {
         throw new NotimplemetedException()
     }
+
+    connected() {
+        throw new NotimplemetedException()
+    }
 }
 
 module.exports = iCrud
