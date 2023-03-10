@@ -24,6 +24,8 @@ class ContextStrategy extends iCrud {
     IsConnected() {
         return this._database.IsConnected()
     }
+
+
 }
 
 module.exports = ContextStrategy
