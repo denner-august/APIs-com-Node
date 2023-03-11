@@ -31,8 +31,17 @@ class Mongodb extends iCrud {
 
     }
 
-    IsConnected() {
+    async IsConnected() {
+        const state = connection.readyState
+        if (state === 'Conectado') {
+            return state
+        }
 
+        if (state === 'Conectando') {
+            await new Promise(resolve => setTimeout(resolve, 1000))
+
+            return state
+        }
     }
 
     async create(item) {
