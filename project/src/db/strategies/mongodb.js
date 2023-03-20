@@ -1,13 +1,20 @@
 const iCrud = require('./interfaces/interfaceCrud')
 const mongoose = require('mongoose');
 
+const STATUS = {
+    0: 'Disconectado',
+    1: 'Conectado',
+    2: 'Conectando',
+    3: "Disconectando"
+}
+
 
 class Mongodb extends iCrud {
     constructor() {
         super()
         this._herois = null
         this._driver = null
-        defineModel()
+        // defineModel()
     }
 
     defineModel() {
@@ -17,7 +24,7 @@ class Mongodb extends iCrud {
             insertedAt: { type: Date, default: new Date() }
         })
 
-        const model = mongoose.model('herois', heroiSchema)
+        mongoose.model('herois', heroiSchema)
     }
 
     connected() {
@@ -32,16 +39,16 @@ class Mongodb extends iCrud {
     }
 
     async IsConnected() {
-        const state = connection.readyState
+        const state = STATUS[connection.readyState]
         if (state === 'Conectado') {
             return state
         }
 
-        if (state === 'Conectando') {
-            await new Promise(resolve => setTimeout(resolve, 1000))
+        if (state !== 'Conectando') return state
 
-            return state
-        }
+        await new Promise(resolve => setTimeout(resolve, 1000))
+
+        return STATUS[connection.readyState]
     }
 
     async create(item) {
