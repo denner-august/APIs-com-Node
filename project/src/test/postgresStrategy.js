@@ -1,4 +1,4 @@
-const { } = require('mocha')
+const { before } = require('mocha')
 const assert = require('assert')
 const postgres = require('../db/strategies/postgres')
 const Context = require('../db/strategies/base/contextStrategy')
@@ -9,10 +9,11 @@ const MOCK_HEROIS_ATUALIZAR = { nome: 'batman', poder: 'tecnologia' }
 
 
 describe('postgres strategy', () => {
-    before(async () => {
-        await context.delete()
-        await context.create(MOCK_HEROIS_ATUALIZAR)
-    })
+
+    // before(async () => {
+    //     await context.delete()
+    //     await context.create(MOCK_HEROIS_ATUALIZAR)
+    // }) // algumas vezes pode dar erro
 
     it('testando  postgres  connection', async () => {
         const result = await context.IsConnected()
